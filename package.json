@@ -1,0 +1,11 @@
+{
+  "name": "mongoDbClient",
+  "version": "1.0.0",
+  "description": "mongoDbClient",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app",
+    "initdb": "node initdb",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
