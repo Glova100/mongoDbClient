@@ -14,7 +14,7 @@ const grey = colors.grey
 
 dbConn.then( db => {
     _db = db
-    console.log( green("Connected") )
+    console.log( green("Connected to database server") )
 
     run(db)
 })
@@ -50,7 +50,7 @@ function readQuery() {
         prompt.get(['query'], function (err, result) {
             if (err) return quit()
 
-           
+            
             if(result.query === 'quit') quit()
 
             resolve(result.query.trim())
@@ -74,7 +74,7 @@ function execQuery(db, query) {
             }
 
             if(doc) {
-             
+                
                 if(query.fields.length > 0) {
                     const o = {}
 
@@ -111,7 +111,7 @@ function parseWhere(root) {
     if(root.type === 'binary_expr') {
         const operator = root.operator;
 
-       
+        
         if(operator === 'AND') {
             const [left, e1] = parseWhere(root.left)
             const [right, e2] = parseWhere(root.right)
@@ -143,8 +143,6 @@ function parseQuery(query) {
         if(!query) return resolve()
         const astObj = parseSql(query)
         
-       
-        
         if(astObj.type != 'select') return reject(new Error('This version only supports \'SELECT\' queries'))
         if(!astObj.from) return reject(new Error('You should specify a collection in \'FROM\' clause'))
 
@@ -164,7 +162,7 @@ function parseQuery(query) {
             try {
                 let where = parseWhere(astObj.where)
 
-                /
+                
                 if(Array.isArray(where)) {
                     where = { [where[0]]: where[1] }
                 }
@@ -199,7 +197,9 @@ function map(a, cb) {
 
 
 function quit() {
-    if(_db) _db.close()
+    if(_db) {
+    _db.close()
     prompt.stop()
-    process.exit() 
+    process.exit()
+    }
 }
